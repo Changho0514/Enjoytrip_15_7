@@ -1,0 +1,16 @@
+.welcome-text {
+  text-align: center;
+  font-size: 30px;
+  margin: 100px 0px 10px;
+}
+.info-text {
+  text-align: center;
+  font-size: 15px;
+  margin: 10px;
+}
+.search {
+  margin: 20px;
+}
+* {
+  font-family: "Pretendard-Regular";
+}

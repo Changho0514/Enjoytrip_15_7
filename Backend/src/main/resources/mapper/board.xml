@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.board.model.mapper.BoardMapper">
+
+	<resultMap type="BoardDto" id="board">
+		<result column="article_no" property="articleNo"/>
+		<result column="subject" property="subject"/>
+		<result column="user_id" property="userId"/>
+		<result column="content" property="content"/>
+		<result column="hit" property="hit"/>
+		<result column="comment" property="comment"/>
+		<result column="date" property="date"/>
+		<result column="isnotice" property="isnotice"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+	</resultMap>
+	
+	<select id="getBoard" parameterType="int" resultMap="board">
+		select article_no, subject, user_id, content, hit, comment, date, isnotice, latitude, longitude
+		from board
+		where article_no = #{articleNo}
+	</select>
+	
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'subject'">
+				and subject like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'subject'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="list" resultMap="board" parameterType="map">
+		select article_no, subject, user_id, content, hit, comment, date, isnotice, latitude, longitude
+		from board
+		<where>
+			<include refid="search"></include>
+		</where>
+		order by isnotice desc, article_no desc
+		limit #{start}, #{listsize}
+	</select>
+	
+	<select id="getTotalArticleCount" parameterType="map" resultType="int">
+		select count(article_no)
+		from board
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+	
+	<insert id="write" parameterType="boardDto">
+		insert into board (subject, user_id, content, date, isnotice, latitude, longitude)
+		values (#{subject}, #{userId}, #{content}, now(), #{isnotice}, #{latitude}, #{longitude})
+	</insert>
+	
+	<update id="modify" parameterType="boardDto">
+		update board
+		set subject = #{subject}, content = #{content}, latitude=#{latitude}, longitude=#{longitude}
+		where article_no = #{articleNo}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+	
+	<update id="increaseHit" parameterType="int">
+		update board
+		set hit = hit + 1
+		where article_no = #{articleNo}
+	</update>
+
+	<update id="increaseComment" parameterType="int">
+		update board
+		set comment = comment + 1
+		where article_no = #{articleNo}
+	</update>
+
+	<update id="decreaseComment" parameterType="int">
+		update board
+		set comment = comment - 1
+		where article_no = #{articleNo}
+	</update>
+	
+	<select id="userlist" parameterType="String" resultMap="board">
+    	select *
+    	from board
+    	where user_id = #{userId}
+    </select>
+    
+    <select id="check" parameterType="int" resultType="String">
+    	select user_id
+    	from board
+    	where article_no = #{articleNo}
+    </select>
+
+	
+</mapper>

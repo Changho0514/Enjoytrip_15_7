@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.ssafy.hotplace.model.mapper.HotPlaceMapper">
+<!--<parameterMap id="HotplaceParameterDto" type="hotplaceParameterDto"></parameterMap>-->
+	<resultMap type="HotPlaceDto" id="hotplace">
+		<result column="hotplace_no" property="hotplaceNo"/>
+		<result column="user_id" property="userId"/>
+		<result column="name" property="userName"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="address" property="address"/>
+		<result column="date" property="date"/>
+		<result column="recommendation" property="recommendation"/>
+		<result column="save_folder" property="saveFolder"/>
+		<result column="original_file" property="originalFile"/>
+		<result column="save_file" property="saveFile"/>
+	</resultMap>
+
+	<insert id="write" parameterType="HotPlaceDto" useGeneratedKeys="true" keyProperty="hotplaceNo">
+		insert into hotplace (user_id, title, content, address, save_folder, original_file, save_file)
+		values (#{userId}, #{title}, #{content}, #{address}, #{saveFolder}, #{originalFile}, #{saveFile})
+	</insert>
+	
+	<update id="writeFile" parameterType="map">
+		update hotplace
+		set save_folder = #{saveFolder}, original_file = #{originalFile}, save_file = #{saveFile}
+		where hotplace_no = #{hotplaceNo}
+	</update>
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			and ${key} like concat('%', #{word}, '%')
+		</if>
+		<if test="sort != null and sort != 'date'">
+			 order by ${sort} desc
+		</if>
+		<if test="sort != null and sort == 'date'">
+			 order by date
+		</if>
+	</sql>
+
+	<select id="hotplaceList" parameterType="map" resultMap="hotplace">
+		select hotplace_no, user_id, title, content, address, recommendation, save_folder, original_file, save_file, date
+		from hotplace
+		<where>
+			<include refid="search"></include>
+		</where>
+		order by recommendation desc, title
+		limit #{start}, #{listsize}
+	</select>
+
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		select count(hotplace_no)
+		from hotplace
+		<where>
+			<include refid="search"></include>
+		</where>
+	</select>
+
+	<select id="hotplaceTOP3" parameterType="String" resultMap="hotplace">
+		select hotplace_no, user_id, title, content, address, recommendation, save_folder, original_file, save_file, date
+		from hotplace
+		order by recommendation desc
+		limit 3
+	</select>
+	
+	<select id="detail" parameterType="int" resultMap="hotplace">
+		select hotplace_no, user_id, title, content, address, recommendation, save_folder, original_file, save_file, date
+		from hotplace
+		where hotplace_no = #{hotplaceNo}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		delete from hotplace
+		where hotplace_no = #{hotplaceNo}
+	</delete>
+	
+	<update id="modify" parameterType="HotPlaceDto">
+		update hotplace
+		set title = #{title}, content = #{content}, address=#{address}, save_folder = #{saveFolder}, original_file = #{originalFile}, save_file = #{saveFile} 
+		where hotplace_no = #{hotplaceNo}
+	</update>
+	
+	<select id="getRecommendCount" parameterType="int" resultType="int">
+		select recommendation
+		from hotplace
+		where hotplace_no=#{hotplaceNo}
+	</select>
+	
+	<select id="getMyRecommendList" parameterType="String" resultType="int">
+		select distinct hotplace_no
+		from recommendation_hotplace
+		where user_id = #{userId}
+	</select>
+
+	<select id="checkRecommendation" parameterType="map" resultType="int">
+		select count(user_id) from recommendation_hotplace
+		where hotplace_no = #{hotplaceNo} and user_id = #{userId}
+	</select>
+
+	<update id="increaseRecommendationCount" parameterType="int">
+		update hotplace
+		set recommendation = recommendation + 1
+		where hotplace_no = #{hotplaceNo}
+	</update>
+
+	<update id="decreaseRecommendationCount" parameterType="int">
+		update hotplace
+		set recommendation = recommendation - 1
+		where hotplace_no = #{hotplaceNo}
+	</update>
+
+	<insert id="insertRecommendationHotplace" parameterType="map">
+		insert into recommendation_hotplace (hotplace_no, user_id)
+		values (#{hotplaceNo}, #{userId})
+	</insert>
+
+	<delete id="deleteRecommendationHotplace" parameterType="map">
+		delete from recommendation_hotplace
+		where hotplace_no = #{hotplaceNo} and user_id = #{userId}
+	</delete>
+
+</mapper>
