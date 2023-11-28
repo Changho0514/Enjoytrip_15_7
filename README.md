@@ -31,13 +31,21 @@
  <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white"> <img src="https://img.shields.io/badge/vuetify-1867C0?style=for-the-badge&logo=vuetify&logoColor=white"> 
 <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
 <img src="https://img.shields.io/badge/kakaoMap-FFCD00?style=for-the-badge&logo=kakaoMap&logoColor=white">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
 
 ### ✔️Back-end
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white">
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
+<img src="https://img.shields.io/badge/apachetomcat-F8DC751?style=for-the-badge&logo=apachetomcat&logoColor=white">
+
+### ✔️Tool
+<img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
 
 ## 🎞 아키텍처
-![아키텍쳐](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/architecture.JPG)
+![아키텍쳐](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/flow.JPG)
 
 ## 💻 주요 기능
 ### 1. 메인페이지
@@ -87,16 +95,40 @@
 ![db](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/db.png)
 
 ## 📍 클래스 다이어그램
+<details>
+    <summary>attraction</summary>
+
 ![관광지](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/attraction.png)
+</details>
+
+<details>
+    <summary>user</summary>
 
 ![유저](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/user.png)
+</details>
+
+<details>
+    <summary>mytrip</summary>
 
 ![계획](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/mytrip.png)
+</details>
+
+<details>
+    <summary>hotplace</summary>
 
 ![핫플레이스](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/hotplace.png)
+</details>
+
+<details>
+    <summary>board</summary>
 
 ![게시판](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/board.png)
+</details>
+
+<details>
+    <summary>comment</summary>
 
 ![댓글](https://github.com/0o0mlb/EnjoyTrip_seoul15_7/blob/main/img/comment.png)
+</details>
 
 ## Swagger API
